@@ -1,0 +1,11 @@
+<div class="navbar bg-base-100 shadow-sm">
+    <div class="flex-1">
+    <a class="btn btn-ghost text-xl">Rewind</a>
+    </div>
+    <div class="flex-none">
+    <ul class="menu menu-horizontal px-1">
+        <li><a>clubs</a></li>
+        <li><%= button_to "Log out", session_path, method: :delete if authenticated? %></li>
+    </ul>
+    </div>
+</div>
