@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   resource :session
   resources :passwords, param: :token
   resources :clubs, only: :index
+  resources :clips, only: [:index]
+
+  get '/clips/:filename', to: 'clips#serve', constraints: { filename: /.*/ }, as: :serve_clip
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   scope '/admin' do

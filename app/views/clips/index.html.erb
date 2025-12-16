@@ -1,0 +1,13 @@
+<h1>Available Video Clips</h1>
+
+<% if @video_files.empty? %>
+  <p class="text-danger"><%= flash[:alert] || "No video files found in the configured directory." %></p>
+<% end %>
+
+<% @video_files.each do |filename| %>
+  <div style="margin-bottom: 30px; padding: 10px; border: 1px solid #eee;">
+    <h3><%= filename %></h3>
+    <% stream_url = serve_clip_path(filename: filename) %>
+    <%= video_tag stream_url, :controls => true %>
+  </div>
+<% end %>
