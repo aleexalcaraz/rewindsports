@@ -3,11 +3,13 @@
     <a class="btn btn-ghost text-xl">Rewind</a>
     </div>
     <div class="flex-none">
-    <ul class="menu menu-horizontal px-1">
-        <li><%= link_to "Buscar", buscar_index_path %></li>
-        <li><%= link_to "Clubs", clubs_path if authenticated? %></li>
-        <li><%= link_to "Courts", courts_path if authenticated? %></li>
-        <li><%= button_to "Log out", session_path, method: :delete if authenticated? %></li>
-    </ul>
+        <ul class="menu menu-horizontal px-1">
+            <li><%= link_to "Buscar", buscar_index_path %></li>
+            <% if authenticated? %>
+                <li><%= link_to "Clubs", clubs_path %></li>
+                <li><%= link_to "Courts", courts_path %></li>
+                <li><%= button_to "Log out", session_path, method: :delete %></li>
+            <% end %>
+        </ul>
     </div>
 </div>
