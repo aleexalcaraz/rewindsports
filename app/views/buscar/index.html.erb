@@ -1,0 +1,35 @@
+<div class="p-8" data-controller="buscar">
+  <h1 class="text-2xl font-bold mb-4">Buscar Clip</h1>
+
+  <%= form_with url: clips_path, method: :get, class: "space-y-4" do |form| %>
+    <div class="field">
+      <%= form.label :club_id, class: "block mb-1" %>
+      <%= form.select :club_id,
+            options_from_collection_for_select(@clubs, :id, :name),
+            { include_blank: 'Club' },
+            { class: "select w-full p-2 border rounded", data: { action: "change->buscar#fetchCourts", buscar_target: "clubSelect" }, required: true } %>
+    </div>
+
+    <div class="field">
+      <%= form.label :court_id, "Cancha", class: "block mb-1" %>
+      <%= form.select :court_id,
+            [],
+            { include_blank: 'Selecciona un club' },
+            { class: "select w-full p-2 border rounded", data: { buscar_target: "courtSelect" }, disabled: true, required: true } %>
+    </div>
+
+    <div class="field">
+      <%= form.label :date, "Fecha", class: "block mb-1" %>
+      <%= form.date_field :date, class: "input w-full p-2 border rounded", required: true %>
+    </div>
+
+    <div class="field">
+      <%= form.label :hour, "Hora", class: "block mb-1" %>
+      <%= form.select :hour, (6..24).map { |h| ["#{h}:00", h] }, { include_blank: 'Selecciona una hora' }, { class: "select w-full p-2 border rounded", required: true } %>
+    </div>
+
+    <div class="actions">
+      <%= form.submit "Buscar", class: "bg-blue-500 text-white px-4 py-2 rounded" %>
+    </div>
+  <% end %>
+</div>

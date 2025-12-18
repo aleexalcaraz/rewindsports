@@ -1,11 +1,50 @@
 class ClipsController < ApplicationController
     allow_unauthenticated_access
 
-    CLIPS_ROOT_PATH = ENV['CLIPS_ROOT_PATH'] || "/Users/alejandroalcaraz/Documents/Indie/padel-bot/SuperPadel/Cancha1/clips"
+    CLIPS_ROOT_PATH = ENV['CLIPS_ROOT_PATH'] || "/Users/alejandroalcaraz/Documents/Indie/padel-bot"
 
     def index
-        @video_files = Dir.entries(CLIPS_ROOT_PATH).select do |f|
-            f.match?(/\.(mp4|webm|mov|ogg)$/i)
+        puts "Searching in path: #{CLIPS_ROOT_PATH}"
+        @video_files = []
+        if params[:club_id].present? && params[:court_id].present?
+            club = Club.find(params[:club_id])
+            court = Court.find(params[:court_id])
+            
+            hour = params[:hour]
+            date = params[:date]
+
+            relative_path = File.join(club.name, court.name, 'clips')
+            search_path = File.join(CLIPS_ROOT_PATH, relative_path)
+
+            puts "Searching in path: #{search_path}"
+            
+            if Dir.exist?(search_path)
+                video_files = Dir.entries(search_path).select do |f|
+                    f.match?(/\.(mp4|webm|mov|ogg)$/i)
+                end
+
+                if date.present? && hour.present?
+                    start_hour = hour.to_i
+                    end_hour = start_hour + 2
+                    
+                    video_files.select! do |f|
+                        # Filename format: 2025-03-29_21-25-24_clip.mp4
+                        match = f.match(/^(\d{4}-\d{2}-\d{2})_(\d{2})/)
+                        next false unless match
+
+                        file_date_str = match[1]
+                        file_hour = match[2].to_i
+
+                        file_date_str == date && (start_hour..end_hour).cover?(file_hour)
+                    end
+                end
+
+                @video_files = video_files.map do |f|
+                    File.join(relative_path, f)
+                end
+            else
+                flash.now[:alert] = "Directory not found for the selected club and court."
+            end
         end
     end
 

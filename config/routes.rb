@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   resources :clubs
   resources :courts
   resources :clips, only: [:index]
+  get 'buscar/courts', to: 'buscar#courts'
+  resources :buscar
 
   get '/clips/:filename', to: 'clips#serve', constraints: { filename: /.*/ }, as: :serve_clip
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
