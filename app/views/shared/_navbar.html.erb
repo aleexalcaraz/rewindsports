@@ -4,7 +4,8 @@
     </div>
     <div class="flex-none">
     <ul class="menu menu-horizontal px-1">
-        <li><a>clubs</a></li>
+        <li><%= link_to "Clubs", clubs_path if authenticated? %></li>
+        <li><%= link_to "Courts", courts_path if authenticated? %></li>
         <li><%= button_to "Log out", session_path, method: :delete if authenticated? %></li>
     </ul>
     </div>

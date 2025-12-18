@@ -10,11 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_16_211345) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_18_003525) do
   create_table "clubs", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "courts", force: :cascade do |t|
+    t.string "name"
+    t.integer "club_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["club_id"], name: "index_courts_on_club_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -34,5 +42,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_16_211345) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
+  add_foreign_key "courts", "clubs"
   add_foreign_key "sessions", "users"
 end

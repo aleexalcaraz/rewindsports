@@ -1,5 +1,4 @@
 class ClubsController < ApplicationController
-  allow_unauthenticated_access only: :index
   before_action :require_admin, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_club, only: %i[ show edit update destroy ]
 

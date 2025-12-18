@@ -1,15 +1,12 @@
 Rails.application.routes.draw do
   resource :session
   resources :passwords, param: :token
-  resources :clubs, only: :index
+  resources :clubs
+  resources :courts
   resources :clips, only: [:index]
 
   get '/clips/:filename', to: 'clips#serve', constraints: { filename: /.*/ }, as: :serve_clip
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  scope '/admin' do
-    resources :clubs
-  end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
