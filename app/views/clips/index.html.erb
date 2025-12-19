@@ -16,7 +16,7 @@
 
   <div data-controller="video-player" class="card w-96 bg-base-100 shadow-md mt-3">
     <div class="card-body">
-      <h2 class="card-title">Clip: <%= File.basename(filename, "_clip.mp4") %></h2>
+      <h2 class="card-title"><%= "#{filename.split('/')[1]} #{File.basename(filename, "_clip.mp4")}" %></h2>
       <% stream_url = serve_clip_path(filename: filename) %>
 
       <div data-video-player-target="loader" class="text-center p-4" style="display: none;">
@@ -26,10 +26,9 @@
 
       <%= video_tag stream_url,
         controls: true,
-        preload: "metadata",
         playsinline: true,
-        class: "rounded-md",
-        style: "width: 100%;",
+        autoplay: true,
+        class: "rounded-md w-full",
         data: { video_player_target: "video" } %>
 
       <div class="mt-6">
