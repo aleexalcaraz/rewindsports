@@ -1,4 +1,4 @@
-<div class="p-8" data-controller="buscar">
+<div class="" data-controller="buscar">
   <h1 class="text-2xl font-bold mb-4">Buscar Clip</h1>
 
   <%= form_with url: clips_path, method: :get, class: "space-y-4" do |form| %>
@@ -29,7 +29,7 @@
     </div>
 
     <div class="actions">
-      <%= form.submit "Buscar", class: "bg-blue-500 text-white px-4 py-2 rounded" %>
+      <%= form.submit "Buscar", class: "btn btn-success text-white" %>
     </div>
   <% end %>
 </div>

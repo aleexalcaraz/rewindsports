@@ -1,13 +1,27 @@
-<h1>Available Video Clips</h1>
+<h1>Resultados</h1>
 
 <% if @video_files.empty? %>
-  <p class="text-danger"><%= flash[:alert] || "No video files found in the configured directory." %></p>
+  <p class="text-danger"><%= flash[:alert] || "No se encontraron clips.." %></p>
 <% end %>
 
 <% @video_files.each do |filename| %>
-  <div style="margin-bottom: 30px; padding: 10px; border: 1px solid #eee;">
-    <h3><%= filename %></h3>
+  <div data-controller="video-player" class="mt-5 p-3" style="border: 1px solid #eee;">
+    <h3 class="mb-3"><%= filename %></h3>
     <% stream_url = serve_clip_path(filename: filename) %>
-    <%= video_tag stream_url, :controls => true %>
+
+    <div data-video-player-target="loader" class="text-center p-4">
+      <span class="loading loading-spinner loading-lg"></span>
+      <p>Cargando clip...</p>
+    </div>
+
+    <%= video_tag stream_url,
+        controls: true,
+        preload: "auto",
+        style: "display: none; width: 100%;",
+        data: { video_player_target: "video" } %>
+
+    <div class="mt-2">
+      <%= link_to "Descargar", stream_url, download: filename, class: "btn btn-success" %>
+    </div>
   </div>
 <% end %>
