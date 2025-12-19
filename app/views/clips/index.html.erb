@@ -1,37 +1,40 @@
-<h1>Resultados</h1>
+<div class="flex">
+    <%= link_to 'javascript:history.back()', class: "flex items-center" do %>
+        <svg class="h-6 w-6 text-blue-500 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+        </svg>
+    <% end %>
+    <h1 class="text-2xl font-bold">Resultados</h1>
+</div>
+
 
 <% if @video_files.empty? %>
   <p class="text-danger"><%= flash[:alert] || "No se encontraron clips.." %></p>
 <% end %>
 
 <% @video_files.each do |filename| %>
-  <div data-controller="video-player" class="mt-5 p-3" style="border: 1px solid #eee;">
-    <h3 class="mb-3"><%= filename %></h3>
-    <% stream_url = serve_clip_path(filename: filename) %>
 
-    <div data-video-player-target="thumbnail" data-action="click->video-player#play" class="relative cursor-pointer">
-      <img src="https://placehold.co/600x400?text=Ver+Clip" alt="Video thumbnail" class="w-full">
-      <div class="absolute top-2 left-2">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
+  <div data-controller="video-player" class="card w-96 bg-base-100 shadow-md mt-3">
+    <div class="card-body">
+      <h2 class="card-title">Clip: <%= File.basename(filename, "_clip.mp4") %></h2>
+      <% stream_url = serve_clip_path(filename: filename) %>
+
+      <div data-video-player-target="loader" class="text-center p-4" style="display: none;">
+        <span class="loading loading-spinner loading-lg"></span>
+        <p>Cargando clip...</p>
       </div>
-    </div>
 
-    <div data-video-player-target="loader" class="text-center p-4" style="display: none;">
-      <span class="loading loading-spinner loading-lg"></span>
-      <p>Cargando clip...</p>
-    </div>
-
-    <%= video_tag stream_url,
+      <%= video_tag stream_url,
         controls: true,
-        preload: "none",
+        preload: "metadata",
+        playsinline: true,
+        class: "d-none rounded-md",
         style: "display: none; width: 100%;",
         data: { video_player_target: "video" } %>
 
-    <div class="mt-2">
-      <%= link_to "Descargar", stream_url, download: filename, class: "btn btn-success" %>
+      <div class="mt-6">
+        <%= link_to "Descargar", stream_url, download: filename, class: "btn btn-success btn-block" %>
+      </div>
     </div>
   </div>
 <% end %>
