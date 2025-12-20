@@ -58,12 +58,18 @@ class ClipsController < ApplicationController
         unless full_path.start_with?(CLIPS_ROOT_PATH) && File.exist?(full_path)
         head :not_found and return
         end
-
-        send_file(
+        if Rails.env.production?
+            response.headers['X-Accel-Redirect'] = "/internal_videos/#{filename}"
+            response.headers['Content-Type'] = 'video/mp4'
+            response.headers['Content-Disposition'] = "#{disposition}; filename=\"#{filename}\""
+            head :ok
+        else
+            send_file(
             full_path,
             filename: filename,
             type: 'video/mp4',
             disposition: disposition
-        )
+            )
+        end
     end
 end
