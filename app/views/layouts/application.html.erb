@@ -18,9 +18,7 @@
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
-    <link href="https://vjs.zencdn.net/8.23.4/video-js.css" rel="stylesheet" />
     
-
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
@@ -31,6 +29,5 @@
     <main class="container mx-auto px-6 mt-5">
       <%= yield %>
     </main>
-    <script src="https://vjs.zencdn.net/8.23.4/video.min.js"></script>
   </body>
 </html>

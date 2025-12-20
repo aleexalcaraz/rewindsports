@@ -20,27 +20,22 @@
 
 <% @video_files.each do |filename| %>
 
-  <div class="card w-96 bg-base-100 shadow-md mt-3">
+  <div data-controller="video-player" class="card w-96 bg-base-100 shadow-md mt-3">
     <div class="card-body">
       <h2 class="card-title"><%= "#{filename.split('/')[1]} #{File.basename(filename, "_clip.mp4")}" %></h2>
       <% stream_url = serve_clip_path(filename: filename) %>
 
-        <video
-          id="my-video"
-          class="video-js vjs-fluid rounded-md"
-          controls
-          preload="auto"
-          data-setup="{}"
-        >
-          <source src=<%= "#{stream_url}" %> type="video/mp4" />
-          <p class="vjs-no-js">
-            To view this video please enable JavaScript, and consider upgrading to a
-            web browser that
-            <a href="https://videojs.com/html5-video-support/" target="_blank"
-              >supports HTML5 video</a
-            >
-          </p>
-        </video>
+      <div data-video-player-target="loader" class="text-center p-4" style="display: none;">
+        <span class="loading loading-spinner loading-lg"></span>
+        <p>Cargando clip...</p>
+      </div>
+
+      <%= video_tag stream_url,
+        controls: true,
+        playsinline: true,
+        autoplay: true,
+        class: "rounded-md w-full",
+        data: { video_player_target: "video" } %>
 
       <div class="mt-6">
         <%= link_to "Descargar", stream_url, download: filename, class: "btn btn-success btn-block" %>
