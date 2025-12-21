@@ -1,0 +1,38 @@
+<% if @errors.any? %>
+  <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Source</th>
+          <th>Number</th>
+          <th>Created At</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @errors.each do |error| %>
+          <tr>
+            <td><%= error.description %></td>
+            <td><%= error.source %></td>
+            <td><%= error.number %></td>
+            <td><%= error.created_at %></td>
+            <td>
+              <% if error.is_error %>
+                <div class="badge badge-error gap-2">
+                  error
+                </div>
+              <% else %>
+                <div class="badge badge-success gap-2">
+                  success
+                </div>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <p class="text-center my-10">No errors found.</p>
+<% end %>

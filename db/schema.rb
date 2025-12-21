@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_18_003525) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_20_185221) do
+  create_table "app_errors", force: :cascade do |t|
+    t.string "description"
+    t.string "source"
+    t.string "number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "clubs", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
