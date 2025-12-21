@@ -8,9 +8,17 @@
         <ul class="menu menu-horizontal px-1">
             <li><%= link_to "Buscar", buscar_index_path %></li>
             <% if authenticated? %>
-                <li><%= link_to "Clubs", clubs_path %></li>
-                <li><%= link_to "Courts", courts_path %></li>
-                <li><%= button_to "Log out", session_path, method: :delete %></li>
+                <li>
+                    <details>
+                        <summary>Admin </summary>
+                        <ul class="bg-base-100 rounded-t-none p-2 w-100">
+                            <li><%= link_to "Clubs", clubs_path %></li>
+                            <li><%= link_to "Courts", courts_path %></li>
+                            <li><%= link_to "Logs", logs_path %></li>
+                            <li><%= button_to "Log out", session_path, method: :delete %></li>
+                        </ul>
+                    </details>
+                </li>
             <% end %>
         </ul>
     </div>
