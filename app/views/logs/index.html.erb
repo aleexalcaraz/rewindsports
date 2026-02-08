@@ -8,6 +8,7 @@
           <th>Number</th>
           <th>Created At</th>
           <th>Status</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -27,6 +28,9 @@
                   success
                 </div>
               <% end %>
+            </td>
+            <td>
+              <%= button_to "Delete", log_path(error), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn btn-error btn-sm" %>
             </td>
           </tr>
         <% end %>
