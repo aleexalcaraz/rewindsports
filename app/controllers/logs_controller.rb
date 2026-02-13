@@ -4,7 +4,10 @@ class LogsController < ApplicationController
   before_action :authenticate, only: :create, if: -> { request.content_type == 'application/json' }
 
   def index
-    @errors = AppError.all
+    @page = (params[:page] || 1).to_i
+    @per_page = 20
+    @errors = AppError.order(created_at: :desc).offset((@page - 1) * @per_page).limit(@per_page)
+    @total_pages = (AppError.count / @per_page.to_f).ceil
   end
 
   def create
