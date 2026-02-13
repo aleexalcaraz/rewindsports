@@ -17,7 +17,7 @@
             <td><%= error.description %></td>
             <td><%= error.source %></td>
             <td><%= error.number %></td>
-            <td><%= error.created_at %></td>
+            <td><time datetime="<%= error.created_at.iso8601 %>" data-controller="local-time"><%= error.created_at %></time></td>
             <td>
               <% if error.is_error %>
                 <div class="badge badge-error gap-2">
