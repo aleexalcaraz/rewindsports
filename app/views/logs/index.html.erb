@@ -1,3 +1,8 @@
+<%= form_with url: logs_path, method: :get, class: "flex gap-2 mb-4" do |f| %>
+  <%= f.text_field :search, value: @search, placeholder: "Search description or source...", class: "input input-bordered w-full" %>
+  <%= f.submit "Search", class: "btn btn-primary" %>
+<% end %>
+
 <% if @errors.any? %>
   <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
     <table class="table">
@@ -41,13 +46,10 @@
     <div class="flex justify-center mt-4">
       <div class="join">
         <% if @page > 1 %>
-          <%= link_to "«", logs_path(page: @page - 1), class: "join-item btn" %>
-        <% end %>
-        <% (1..@total_pages).each do |p| %>
-          <%= link_to p, logs_path(page: p), class: "join-item btn #{p == @page ? 'btn-active' : ''}" %>
+          <%= link_to "« Back", logs_path(page: @page - 1, search: @search), class: "join-item btn" %>
         <% end %>
         <% if @page < @total_pages %>
-          <%= link_to "»", logs_path(page: @page + 1), class: "join-item btn" %>
+          <%= link_to "Next »", logs_path(page: @page + 1, search: @search), class: "join-item btn" %>
         <% end %>
       </div>
     </div>

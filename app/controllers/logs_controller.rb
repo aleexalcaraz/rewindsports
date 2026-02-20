@@ -6,8 +6,15 @@ class LogsController < ApplicationController
   def index
     @page = (params[:page] || 1).to_i
     @per_page = 20
-    @errors = AppError.order(created_at: :desc).offset((@page - 1) * @per_page).limit(@per_page)
-    @total_pages = (AppError.count / @per_page.to_f).ceil
+    @search = params[:search].to_s.strip
+
+    scope = AppError.all
+    if @search.present?
+      scope = scope.where("LOWER(description) LIKE :q OR LOWER(source) LIKE :q", q: "%#{@search.downcase}%")
+    end
+
+    @errors = scope.order(created_at: :desc).offset((@page - 1) * @per_page).limit(@per_page)
+    @total_pages = (scope.count / @per_page.to_f).ceil
   end
 
   def create
