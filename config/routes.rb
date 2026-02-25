@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :clubs
   resources :courts
   resources :logs
+  resources :club_files
   resources :clips, only: [ :index ]
   get "buscar/courts", to: "buscar#courts"
   resources :buscar

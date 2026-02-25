@@ -1,0 +1,44 @@
+<% if @club_files.any? %>
+  <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Filename</th>
+          <th>Club</th>
+          <th>Uploaded At</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @club_files.each do |cf| %>
+          <tr>
+            <td>
+              <%= link_to cf.file.filename, club_file_path(cf), target: "_blank", class: "link link-primary" %>
+            </td>
+            <td><%= cf.club.name %></td>
+            <td>
+              <time datetime="<%= cf.created_at.iso8601 %>" data-controller="local-time"><%= cf.created_at %></time>
+            </td>
+            <td>
+              <%= button_to "Delete", club_file_path(cf), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn btn-error btn-sm" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <% if @total_pages > 1 %>
+    <div class="flex justify-center mt-4">
+      <div class="join">
+        <% if @page > 1 %>
+          <%= link_to "« Back", club_files_path(page: @page - 1), class: "join-item btn" %>
+        <% end %>
+        <% if @page < @total_pages %>
+          <%= link_to "Next »", club_files_path(page: @page + 1), class: "join-item btn" %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <p class="text-center my-10">No files uploaded yet.</p>
+<% end %>
