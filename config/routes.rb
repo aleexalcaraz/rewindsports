@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :passwords, param: :token
   resources :dashboards, only: [ :index ]
   resources :clubs
+  resources :users
   resources :courts
   resources :logs
   resources :club_files

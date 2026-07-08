@@ -4,8 +4,10 @@
           <span class="text-red-500 -mr-1">R</span>ewind
         <% end %>
     </div>
+
     <div class="flex-none">
-        <ul class="menu menu-horizontal px-1">
+        <%# Desktop menu %>
+        <ul class="menu menu-horizontal px-1 hidden lg:flex">
             <li><%= link_to "Buscar", buscar_index_path %></li>
             <% if authenticated? %>
                 <li><%= link_to "Dashboards", dashboards_path %></li>
@@ -13,8 +15,9 @@
                     <li>
                         <details>
                             <summary>Admin </summary>
-                            <ul class="bg-base-100 rounded-t-none p-2 w-100">
+                            <ul class="bg-base-100 rounded-t-none p-2 z-10">
                                 <li><%= link_to "Clubs", clubs_path %></li>
+                                <li><%= link_to "Users", users_path %></li>
                                 <li><%= link_to "Courts", courts_path %></li>
                                 <li><%= link_to "Logs", logs_path %></li>
                                 <li><%= link_to "Club Files", club_files_path %></li>
@@ -25,5 +28,35 @@
                 <li><%= button_to "Log out", session_path, method: :delete %></li>
             <% end %>
         </ul>
+
+        <%# Mobile menu %>
+        <div class="dropdown dropdown-end lg:hidden">
+            <div tabindex="0" role="button" class="btn btn-ghost">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </div>
+            <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow">
+                <li><%= link_to "Buscar", buscar_index_path %></li>
+                <% if authenticated? %>
+                    <li><%= link_to "Dashboards", dashboards_path %></li>
+                    <% if super_admin? %>
+                        <li>
+                            <details>
+                                <summary>Admin</summary>
+                                <ul>
+                                    <li><%= link_to "Clubs", clubs_path %></li>
+                                    <li><%= link_to "Users", users_path %></li>
+                                    <li><%= link_to "Courts", courts_path %></li>
+                                    <li><%= link_to "Logs", logs_path %></li>
+                                    <li><%= link_to "Club Files", club_files_path %></li>
+                                </ul>
+                            </details>
+                        </li>
+                    <% end %>
+                    <li><%= button_to "Log out", session_path, method: :delete %></li>
+                <% end %>
+            </ul>
+        </div>
     </div>
 </div>
