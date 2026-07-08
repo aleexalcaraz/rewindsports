@@ -1,4 +1,5 @@
 class ClubsController < ApplicationController
+  before_action :require_super_admin
   before_action :require_admin, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_club, only: %i[ show edit update destroy ]
 

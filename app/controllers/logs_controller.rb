@@ -2,6 +2,7 @@ class LogsController < ApplicationController
   allow_unauthenticated_access only: %i[ create ]
   protect_from_forgery with: :null_session
   before_action :authenticate, only: :create, if: -> { request.content_type == 'application/json' }
+  before_action :require_super_admin, except: %i[ create ]
 
   def index
     @page = (params[:page] || 1).to_i

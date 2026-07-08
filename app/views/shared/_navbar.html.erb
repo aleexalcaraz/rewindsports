@@ -9,18 +9,20 @@
             <li><%= link_to "Buscar", buscar_index_path %></li>
             <% if authenticated? %>
                 <li><%= link_to "Dashboards", dashboards_path %></li>
-                <li>
-                    <details>
-                        <summary>Admin </summary>
-                        <ul class="bg-base-100 rounded-t-none p-2 w-100">
-                            <li><%= link_to "Clubs", clubs_path %></li>
-                            <li><%= link_to "Courts", courts_path %></li>
-                            <li><%= link_to "Logs", logs_path %></li>
-                            <li><%= link_to "Club Files", club_files_path %></li>
-                            <li><%= button_to "Log out", session_path, method: :delete %></li>
-                        </ul>
-                    </details>
-                </li>
+                <% if super_admin? %>
+                    <li>
+                        <details>
+                            <summary>Admin </summary>
+                            <ul class="bg-base-100 rounded-t-none p-2 w-100">
+                                <li><%= link_to "Clubs", clubs_path %></li>
+                                <li><%= link_to "Courts", courts_path %></li>
+                                <li><%= link_to "Logs", logs_path %></li>
+                                <li><%= link_to "Club Files", club_files_path %></li>
+                            </ul>
+                        </details>
+                    </li>
+                <% end %>
+                <li><%= button_to "Log out", session_path, method: :delete %></li>
             <% end %>
         </ul>
     </div>

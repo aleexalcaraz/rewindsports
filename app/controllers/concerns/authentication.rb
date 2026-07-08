@@ -4,6 +4,7 @@ module Authentication
   included do
     before_action :require_authentication
     helper_method :authenticated?
+    helper_method :super_admin?
   end
 
   class_methods do
@@ -15,6 +16,14 @@ module Authentication
   private
     def authenticated?
       resume_session
+    end
+
+    def super_admin?
+      authenticated? && Current.user&.is_super_admin?
+    end
+
+    def require_super_admin
+      head :forbidden unless super_admin?
     end
 
     def require_authentication
