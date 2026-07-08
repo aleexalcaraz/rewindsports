@@ -25,6 +25,7 @@ class DashboardsController < ApplicationController
       @count_week  = scope.where(created_at: @ranges["week"]).count
       @count_month = scope.where(created_at: @ranges["month"]).count
       @count_year  = scope.where(created_at: @ranges["year"]).count
+      @count_total = scope.count
 
       @period = PERIODS.include?(params[:period]) ? params[:period] : "day"
       @from   = params[:from].presence
