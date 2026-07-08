@@ -1,0 +1,95 @@
+<div class="p-4">
+  <h1 class="text-2xl font-bold mb-1">Panel de control</h1>
+
+  <% if @club %>
+    <p class="text-base-content/60 mb-4">Videos generados para <span class="font-semibold"><%= @club.name %></span></p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div class="stats shadow bg-base-100">
+        <div class="stat">
+          <div class="stat-title">Hoy</div>
+          <div class="stat-value text-primary"><%= @count_day %></div>
+          <div class="stat-desc">videos generados</div>
+        </div>
+      </div>
+      <div class="stats shadow bg-base-100">
+        <div class="stat">
+          <div class="stat-title">Esta semana</div>
+          <div class="stat-value text-primary"><%= @count_week %></div>
+          <div class="stat-desc">videos generados</div>
+        </div>
+      </div>
+      <div class="stats shadow bg-base-100">
+        <div class="stat">
+          <div class="stat-title">Este mes</div>
+          <div class="stat-value text-primary"><%= @count_month %></div>
+          <div class="stat-desc">videos generados</div>
+        </div>
+      </div>
+      <div class="stats shadow bg-base-100">
+        <div class="stat">
+          <div class="stat-title">Este año</div>
+          <div class="stat-value text-primary"><%= @count_year %></div>
+          <div class="stat-desc">videos generados</div>
+        </div>
+      </div>
+    </div>
+
+    <% tab_labels = { "day" => "Hoy", "week" => "Esta semana", "month" => "Este mes", "year" => "Este año", "custom" => "Personalizado" } %>
+    <div role="tablist" class="tabs tabs-boxed mb-4 w-fit">
+      <% tab_labels.each do |key, label| %>
+        <%= link_to label, dashboards_path(period: key),
+              role: "tab",
+              class: "tab #{'tab-active' if @period == key}" %>
+      <% end %>
+    </div>
+
+    <% if @period == "custom" %>
+      <div class="card bg-base-100 shadow max-w-2xl mb-6">
+        <div class="card-body">
+          <%= form_with url: dashboards_path, method: :get, class: "flex flex-wrap items-end gap-3" do |f| %>
+            <%= f.hidden_field :period, value: "custom" %>
+            <div class="form-control">
+              <label class="label"><span class="label-text">Desde</span></label>
+              <%= f.date_field :from, value: @from, class: "input input-bordered" %>
+            </div>
+            <div class="form-control">
+              <label class="label"><span class="label-text">Hasta</span></label>
+              <%= f.date_field :to, value: @to, class: "input input-bordered" %>
+            </div>
+            <%= f.submit "Aplicar", class: "btn btn-primary" %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 mb-8">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Cancha</th>
+            <th>Fecha</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @entries.any? %>
+            <% @entries.each do |entry| %>
+              <tr>
+                <td><%= court_from_source(entry.source) %></td>
+                <td><time datetime="<%= entry.created_at.iso8601 %>" data-controller="local-time"><%= entry.created_at %></time></td>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr>
+              <td colspan="2" class="text-center text-base-content/50 py-6">No hay videos generados en este período.</td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <div class="alert alert-warning">
+      <span>Tu usuario no está asignado a ningún club, así que no hay nada para mostrar.</span>
+    </div>
+  <% end %>
+</div>

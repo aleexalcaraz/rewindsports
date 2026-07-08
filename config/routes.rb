@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resource :session
   resources :passwords, param: :token
+  resources :dashboards, only: [ :index ]
   resources :clubs
   resources :courts
   resources :logs

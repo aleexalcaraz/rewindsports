@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_02_25_151421) do
+ActiveRecord::Schema[8.0].define(version: 2026_07_08_201631) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -84,7 +84,10 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_25_151421) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "api_key"
+    t.integer "club_id"
+    t.boolean "is_super_admin", default: false, null: false
     t.index ["api_key"], name: "index_users_on_api_key"
+    t.index ["club_id"], name: "index_users_on_club_id"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
@@ -93,4 +96,5 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_25_151421) do
   add_foreign_key "club_files", "clubs"
   add_foreign_key "courts", "clubs"
   add_foreign_key "sessions", "users"
+  add_foreign_key "users", "clubs"
 end

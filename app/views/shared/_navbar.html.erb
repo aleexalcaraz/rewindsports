@@ -8,6 +8,7 @@
         <ul class="menu menu-horizontal px-1">
             <li><%= link_to "Buscar", buscar_index_path %></li>
             <% if authenticated? %>
+                <li><%= link_to "Dashboards", dashboards_path %></li>
                 <li>
                     <details>
                         <summary>Admin </summary>
